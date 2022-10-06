@@ -49,7 +49,7 @@ def importexel(*kwargs):
             ws.write(1 + i, 1, dict_bez_0_ostatkov[i]['end'])
 
 
-      wb.save('example1.xls')
+      wb.save('{}.xls'.format(data_end))
 
 
 importexel(itog)
