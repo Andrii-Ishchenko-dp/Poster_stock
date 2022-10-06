@@ -25,7 +25,8 @@ for i in res['response']:
 
       ingred = {
             'name':res['response'][count_ing]['ingredient_name'],
-            'end':res['response'][count_ing]['end']
+            'end':res['response'][count_ing]['end'],
+            'cost_end': res['response'][count_ing]['cost_end']
       }
       itog.append(ingred)
       count_ing += 1
@@ -37,6 +38,8 @@ def importexel(*kwargs):
       ws = wb.add_sheet('Все склады')
       ws.write(0, 0, 'Название:')
       ws.write(0, 1, data_end)
+      ws.write(0, 2, 'Себестоимость:')
+      ws.write(0, 3, 'Остаток в деньгах:')
       dict_bez_0_ostatkov = []
       for i in range(len(itog)):
             if itog[i]['end'] == 0:
@@ -47,8 +50,9 @@ def importexel(*kwargs):
 
             ws.write(1 + i, 0, dict_bez_0_ostatkov[i]['name'])
             ws.write(1 + i, 1, dict_bez_0_ostatkov[i]['end'])
-
-
+            ws.write(1 + i, 2, dict_bez_0_ostatkov[i]['cost_end'])
+            ws.write(1 + i, 3, xlwt.Formula("B{}*C{}".format(i+2,i+2)))
+      ws.write(len(dict_bez_0_ostatkov)+1, 3, xlwt.Formula("SUM(D2:D{})".format(len(dict_bez_0_ostatkov)+1)))
       wb.save('{}.xls'.format(data_end))
 
 
